@@ -20,10 +20,10 @@ The project progresses through multiple stages:
 
 ## Current Status
 
-- Simulation: In progress
-- HIL: Planned
-- Firmware: Planned
-- Hardware: Planned
+- Simulation: Completed
+- HIL: In progress
+- Firmware: In progress
+- Hardware: In progress
 
 ## Roadmap
 
