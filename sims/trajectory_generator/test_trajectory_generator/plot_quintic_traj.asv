@@ -1,0 +1,69 @@
+function plot_quintic_traj(traj, waypoints)
+% PLOT_QUINTIC_TRAJ_3D
+%   Plots position/velocity/acceleration and shows a 3D visualization
+%   of the generated trajectory.
+%
+%   Inputs:
+%       traj: trajectory struct from generate_quintic_trajectory
+%       waypoints: Nx3 array
+
+%% ===============================
+%  PLOT P / V / A
+% ===============================
+
+T_total = traj.t_breaks(end);
+ts = linspace(0, T_total, 600);
+
+P = zeros(length(ts),3);
+V = zeros(length(ts),3);
+A = zeros(length(ts),3);
+
+for k = 1:length(ts)
+    [P(k,:), V(k,:), A(k,:)] = evaluate_quintic_traj(traj, ts(k));
+end
+
+figure;
+
+subplot(3,1,1);
+plot(ts, P, 'LineWidth', 1.2);
+title('Position'); grid on;
+
+subplot(3,1,2);
+plot(ts, V, 'LineWidth', 1.2);
+title('Velocity'); grid on;
+
+subplot(3,1,3);
+plot(ts, A, 'LineWidth', 1.2);
+title('Acceleration'); grid on;
+
+
+%% ===============================
+%  3D TRAJECTORY VISUALIZATION
+% ===============================
+
+figure;
+hold on; grid on; axis equal;
+
+% Draw full trajectory line
+plot3(P(:,1), P(:,2), P(:,3), 'LineWidth', 2);
+
+% Draw waypoints
+plot3(waypoints(:,1), waypoints(:,2), waypoints(:,3), 'ro', ...
+    'MarkerSize', 6, 'MarkerFaceColor', 'r');
+
+% Animate travel along trajectory
+h = plot3(P(1,1), P(1,2], P(1,3), 'bo', 'MarkerSize', 8, ...
+    'MarkerFaceColor', 'b');
+
+xlabel('X'); ylabel('Y'); zlabel('Z');
+title('3D Trajectory Visualization');
+
+% Animation loop
+for k = 1:length(ts)
+    set(h, 'XData', P(k,1), 'YData', P(k,2), 'ZData', P(k,3));
+    drawnow;
+end
+
+hold off;
+
+end

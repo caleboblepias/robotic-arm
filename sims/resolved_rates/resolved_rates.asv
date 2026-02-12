@@ -1,0 +1,8 @@
+function q_dot = resolved_rates(x_dot, J_pinv)
+
+
+q_dot = 
+
+
+end
+
